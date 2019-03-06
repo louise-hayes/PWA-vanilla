@@ -5,24 +5,48 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="Description" content="A Javascript Firebase PWA">
   <title>My hello world page</title>
   <link rel="stylesheet" type="text/css" href="hello-world.css" media="all" />
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
   <h1 class="vertical-container">Hello World</h1>
-  <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyAKIYTvkf46VYSwggb91oqXHWFy8_rF3g8",
-      authDomain: "aws-vanilla.firebaseapp.com",
-      databaseURL: "https://aws-vanilla.firebaseio.com",
-      projectId: "aws-vanilla",
-      storageBucket: "aws-vanilla.appspot.com",
-      messagingSenderId: "79659310815"
+      apiKey: "AIzaSyBXTvxHtU6xy938kX4HGSVGuDsE3cSUcUY",
+      authDomain: "pwa-vanilla.firebaseapp.com",
+      databaseURL: "https://pwa-vanilla.firebaseio.com",
+      projectId: "pwa-vanilla",
+      storageBucket: "pwa-vanilla.appspot.com",
+      messagingSenderId: "1065123917893"
     };
     firebase.initializeApp(config);
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function () {
+          console.log('Service Worker Registered');
+        });
+    }
+  </script>
+  <script>
+    const messaging = firebase.messaging();
+    messaging.requestPermission()
+      .then(function () {
+        console.log('Notification permission granted.');
+        return messaging.getToken();
+      })
+      .then(function (token) {
+        console.log(token);
+      })
+      .catch(function (err) {
+        console.log('Unable to get permission to notify.', err);
+      })
   </script>
 </body>
 
